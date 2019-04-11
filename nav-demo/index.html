@@ -3,11 +3,16 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" >
+  <link rel="stylesheet" href="./css/style.css">
   <title>我的导航</title>
 </head>
 <body>
-  <main></main>
+  <main>
+      <div class="warpper" id='main'>
+
+        </div>
+  </main>
   <footer></footer>
   <script>
     var keys = {
@@ -31,6 +36,10 @@
       's ': 'sohu.com',
       'z' : 'zhihu.com',
     }
+    var hashInlocalStorage = JSON.parse(localStorage.getItem('cundang' || 'null'));
+    if(hashInlocalStorage){
+      hash = hashInlocalStorage;
+    }
     index = 0;
     while(index< keys['length'] ){
       div1 = document.createElement('div');
@@ -41,14 +50,29 @@
       while(index2 < row['length']){
         kbd1 = document.createElement('kbd');
         div1.appendChild(kbd1);
+        button1 = document.createElement('button');
         kbd1.className = 'key';
         kbd1.textContent = row[index2];
+        kbd1.appendChild(button1);
+        button1.textContent = '编辑';
+        button1.id = row[index2];
+        button1.onclick = function(sdfas){
+          key = sdfas['target']['id'];
+          x = prompt('请输入新的网址');
+          hash[key] = x;
+          localStorage.setItem('cundang', JSON.stringify(hash));
+
+        }
         index2 = index2 + 1;
 
       }
       index = index + 1;
-
-    }   
+      document.onkeypress = function(sfasdfa){
+        key = sfasdfa['key'];
+        website = hash[key];
+        window.open('http://'+website , '_blank');
+      }
+    }
  </script>
 </body>
 </html>
